@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  background: #fafafa;
+  color: #111;
+  font-family: system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+main {
+  max-width: 65ch;
+  padding: 4rem 1.5rem;
+  margin: auto;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+}
