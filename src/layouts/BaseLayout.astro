@@ -1,0 +1,36 @@
+---
+const { title = "Martha Falkesgaard Nybroe" } = Astro.props;
+---
+
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/src/styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  </script>
+
+  </head>
+
+  <body>
+<div class="top-bar">
+  <a href="/" class="top-bar-title">Martha Falkesgaard Nybroe</a>
+  <nav class="top-nav">
+    <a href="/ejendomsdata">Ejendomsdata</a>
+    <a href="/puljefordeling">Puljefordelinger</a>
+  </nav>
+</div>
+
+
+
+
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

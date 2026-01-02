@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Ejendomsdata">
+  <h1>Ejendomsdata</h1>
+
+  <p>
+    Som en del af mit bachelorprojekt samlede jeg, sammen med min skønne bachelormakker, 
+    et fuldstændigt datasæt med information om alle nuværende danske bygninger, samt alle bygninger, der er revet ned de sidste 15 år. 
+    Det har siden vist sig at være et brugbart datasæt til forskningsformål, 
+    så her deler vi det digitale dataguld.
+  </p>
+
+<h3>Adgang til data </h3>
+  Data kan hentes fra Datafordeleren.dk, men det er en kringlet process, som
+  mange store hjerner har slået sig på. Det nuværende BBR-register, der
+  dækker stående bygninger i 2024, kan i stedet downloades nemt fra Google Drive her:
+  <p>
+  <a href="https://drive.google.com/file/d/1683bfKSvxwzuiNdWXMUzavZA3GBB1mPj/view?usp=sharing" target="_blank" rel="noopener">BBR Register 2024</a>
+</p>
+
+<h3> Bachelorprojekt: Overlevelsesanalyse af danske bygninger </h3>
+  <p>
+    Bachelorprojektet gennemgår processen for at udtrække og rense ejendomsdata og 
+    giver en grundig gennemgang af ovenstående datasæt. Metodisk beskæftiger
+    projektet sig med matematisk modellering af overlevelsesfunktioner for danske ejendomme
+    gennem Markovkæder og fasetypefordelinger.
+  </p>
+  <a href="/bachelor.pdf" target="_blank" rel="noopener">"Fit of the Survival: A Statistical Analysis of Building Survival" (PDF)</a>
+
+<h3> Artikel: Om censurering af overlevelsesdata med danske bygninger som case </h3>
+  <p>
+   Præsenteret og udgivet i forbindelse med Sustainable Built Environment Conference i Trondheim.
+   Præsenterer en ny metode til at indarbejde censoreret data i statistiske overlevelsesanalyser.
+  </p>
+  <a href="/sbe_article.pdf" target="_blank" rel="noopener">"Building Service Life Revised: A Statistical Survival Analysis of 100.000 Demolitions in Denmark" (PDF)</a>
+
+</BaseLayout>

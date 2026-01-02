@@ -1,27 +1,56 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Your Name</title>
-    <link rel="stylesheet" href="/src/styles/style.css" />
-
-
-  </head>
-  <body>
-    <main>
-      <h1>Your Name</h1>
+<BaseLayout title="Martha Nybroe">
+  <div class="home-intro">
+    <div class="text-content">
+      <h1>Hej med dig!</h1>
 
       <p>
-        I’m a developer interested in simple software and clean design.
+        Jeg studerer noget med matematik og noget med data og har evigt optur over nye metoder til at forstå verden gennem tal. 
+        Her på siden uploader jeg data og projekter, der kan have relevans for andre.
       </p>
-      <a href="/notes">Notes</a>
 
-      <p>
-        <a href="mailto:you@email.com">Email</a><br />
-        <a href="https://github.com/yourusername">GitHub</a>
-      </p>
-    </main>
-  </body>
-</html>
+      <div class="social-links">
+      <a href="https://github.com/marthafn" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/martha-falkesgaard-nybroe-6159b4225/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:mfnybroe@gmail.com" target="_blank" rel="noopener">Mail</a>
+      </div>
+
+    </div>
+
+    <div class="image-content">
+      <img src="/profile.png" alt="Mig" class="profile-image" />
+    </div>
+  </div>
+  
+  <section class="theme-box">
+  <p class="theme-heading"> </span>Spørg mig om …</p>
+
+  <div class="theme-topics">
+    <div class="topic">
+      <span class="icon">📊</span>
+      <span>Dataanalyse</span>
+    </div>
+
+    <div class="topic">
+      <span class="icon">🏘️</span>
+      <span>Ejendomsdata</span>
+    </div>
+
+    <div class="topic">
+      <span class="icon">🧠</span>
+      <span>Machine Learning</span>
+    </div>
+
+    <div class="topic">
+      <span class="icon">💃</span>
+      <span>Salsadans</span>
+    </div>
+  </div>
+</section>
+
+
+  
+
+</BaseLayout>

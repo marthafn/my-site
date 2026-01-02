@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PlotlyFolder from '../components/PlotlyFolder.astro';
+import PuljerContent from '../components/pulje-fordeling.md';
+---
+
+<BaseLayout title="Puljefordelinger">
+
+<h1>Puljefordelinger</h1>
+Den nationale danske holdturnering i padel, <a href="https://www.danskpadelforbund.dk/turnering/dpf-holdliga/">Lunar Ligaen</a>, 
+er verden største padelliga for hold, med mere end 1000 hold fordelt over hele landet. 
+Her på siden præsenterer jeg en optimeringsalgoritme til at fordele deltagerholdene i puljer således at køretiden til hver kamp minimeres,
+under hensyntagen til række og division, at hold helst ikke ender i pulje med andre hold fra samme klub og at køretiden skal
+balanceres, både mellem hold og mellem puljer.
+
+
+<h3>Se puljefordelingerne</h3>
+
+Vælg en række i menuen for at undersøge rækkens puljefordeling.
+
+Klik på en pulje til højre på figuren for at inspicere puljen nærmere.
+I parentesen for hver pulje printes den gennemsnitlige samlede køretid for et hold i puljen samt
+den maksimale samlede køretid for et hold i puljen.
+<br> 
+<br> 
+
+<PlotlyFolder />
+ <h3>Download alle puljefordelinger</h3>
+<a href="/rækker.xlsx" target="_blank" rel="noopener"> Puljefordeling forår 2026 (Excel)</a>
+<br>
+<br>
+
+<section class="muted-bg">
+  <div class="muted-content">
+<h3>🤗 Puljefordelingsalgoritmen kort fortalt</h3>
+Puljerne laves gennem en to-trins fordelingsmetode. I trin et udvælges et hold og de seks nærmeste hold (fra andre klubber) lokaliseres.
+På denne måde dannes et antal puljer med lavest mulig køretid og en række resthold, der fordeles til tilfældige puljer, 
+uden at antallet af hold fra samme klub overskriver 1 (maksimalt 2).
+
+Denne fordeling agerer som udgangspunktet for trin to. I trin to undersøges
+alle forbedringsmuligheder trin for trin ved at bytte hold mellem puljer, 
+hvis det kan give kortere rejser og mere fair puljer – især hvis nogle puljer eller enkelte hold har markant længere køretid end andre. 
+Samtidig sikres det, at der aldrig kommer mere end 2 hold fra samme klub i den samme pulje, som regel håndhæves 1 klub pr. pulje.
+<br>
+<br>
+<br>
+<h3>🥸Puljefordelingsalgoritme for nørder</h3>
+
+ <article>
+    <PuljerContent />
+  </article>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
+
+  </div>
+</section>
+
+
+</BaseLayout>
+
+
+
+

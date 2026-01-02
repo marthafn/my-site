@@ -1,21 +1,42 @@
-body {
-  margin: 0;
-  background: #fafafa;
-  color: #111;
-  font-family: system-ui, sans-serif;
-  font-size: 18px;
-  line-height: 1.7;
+:root {
+  --bg: linen;
+  --text: #111;
+  --muted: #666;
+  --theme: rgb(30, 157, 230);  
+  --muted_theme: color-mix(in srgb, var(--theme) 10%, rgb(246, 252, 252) 90%);
 }
 
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.7;
+  position: relative; /* needed for top-right nav */
+}
+
+
 main {
-  max-width: 65ch;
-  padding: 4rem 1.5rem;
+  max-width: 85ch;
+  padding: 6rem 1.5rem 4rem; 
   margin: auto;
 }
 
+
 h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  margin-bottom: 1.25rem;
 }
 
 a {
@@ -23,3 +44,310 @@ a {
   text-decoration-thickness: 1px;
   text-underline-offset: 0.15em;
 }
+
+a:hover {
+  text-decoration: none;
+}
+
+
+ul {
+  padding-left: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+
+
+
+.home-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap; /* allows wrapping on small screens */
+}
+
+.text-content {
+  flex: 1 1 300px; /* grows, shrinks, min width */
+}
+
+.image-content {
+  flex: 0 0 150px; /* fixed width for image container */
+}
+
+.profile-image {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 60%;
+  border: 2px solid var(--bg);
+
+  margin-top: -60px; /* moves the image up */
+}
+
+
+
+
+@media (max-width: 600px) {
+  .home-intro {
+    gap: 1rem;
+  }
+
+  .profile-image {
+    margin: 1rem auto 0;
+    display: block;
+  }
+}
+
+
+.social-links {
+  display: flex;
+  gap: 1.5rem;       /* spacing between links */
+  margin-top: 1rem;
+  margin-bottom: 6rem; /* increase/decrease as you like */
+}
+
+
+.social-links a {
+  color: var(--theme);    /* match your deep burgundy */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s, font-weight 0.2s;
+}
+
+.social-links a:hover {
+  font-weight: 700;   /* bolder on hover */
+}
+
+
+@media (max-width: 600px) {
+  .theme-block {
+    height: 80px;
+  }
+}
+
+.theme-block {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;             /* full viewport width */
+  height: 320px;            /* adjust as needed */
+  background-color: var(--muted_theme);
+  margin-top: 6rem;
+}
+
+
+.theme-box {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background-color: var(--muted_theme);
+  color: black;
+  padding: 3rem 1.5rem;
+}
+
+.muted-bg {
+  background-color: var(--muted_theme);
+  width: 100vw;         /* full viewport width */
+  position: relative;    
+  left: 50%;             /* push it back to center */
+  right: 50%;
+  margin-left: -50vw;    /* offset by half viewport */
+  margin-right: -50vw;
+  padding: 2rem 0;
+}
+
+.muted-content {
+  max-width: 85ch;      /* keeps text constrained */
+  margin: 0 auto;        /* center text */
+  padding: 0 1rem;       /* optional side padding */
+}
+
+
+
+.theme-heading {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem;
+  text-align: center;
+  opacity: 0.95;
+}
+
+.theme-topics {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.topic {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  font-size: 1rem;
+  font-weight: 500;
+
+  background: var(--theme);
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+
+  backdrop-filter: blur(2px);
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+
+.page-content main {
+  padding-top: 1.5rem;  /* equal or slightly larger than top-bar height */
+}
+
+
+/* Reset old styles */
+.top-nav,
+.nav-wrapper {
+  all: unset;
+}
+
+/* Top bar container */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* everything left-aligned */
+  gap: 2rem;                   /* space between name and links */
+  padding: 0 2rem;
+  height: 64px;
+  background-color: var(--theme);
+  color: var(--bg);
+  font-family: 'Poppins', system-ui, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Site title */
+.top-bar-title {
+  color: var(--bg);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+.top-bar-title:hover {
+  font-weight: 700; 
+} 
+
+
+/* Navigation links */
+.top-nav {
+  display: flex;
+  gap: 2rem;          /* spacing between links */
+  margin: 0;
+  padding: 0;
+  background: none;    /* remove any box */
+}
+
+/* Links styling */
+.top-nav a {
+  text-decoration: none; /* remove underline / box */
+  color: var(--bg);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: font-weight 0.2s;
+}
+
+.top-nav a:hover {
+  font-weight: 700;
+}
+
+.cv-page {
+  max-width: 1500px; /* increase width */
+  margin: 0 auto;
+  padding: 0rem 0rem; /* a bit more padding on sides */
+  color: var(--text);
+  font-family: 'Poppins', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.cv-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--theme);
+  margin-bottom: 0.5rem;
+}
+
+.cv-contact {
+  font-size: 0.9rem;
+  color: gray;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* stretch contacts inline with page width */
+  gap: 1.5rem;
+}
+
+.cv-contact a {
+  color: gray;
+  text-decoration: none;
+}
+
+.cv-section {
+  margin-top: 3rem;
+}
+
+
+.cv-section h2 {
+  color: var(--theme);
+  font-weight: 700;
+  border-bottom: 2px solid var(--theme);
+  padding-bottom: 0.3rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+
+.cv-item h3 {
+  font-size: 1.5rem; 
+}
+
+.cv-item h3 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  color: var(--text);
+}
+
+.cv-item .date {
+  font-weight: 400;
+  color: gray;
+  font-size: 0.95rem;
+}
+
+.cv-item .subtitle {
+  font-style: italic;
+  color: var(--theme);
+  margin-bottom: 0.3rem;
+}
+
+.cv-item ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.cv-item ul li::before {
+  content: "-"; /* checkmark similar to your LaTeX version */
+  color: var(--theme);
+  margin-right: 0.5rem;
+}
+
