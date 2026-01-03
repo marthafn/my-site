@@ -19,7 +19,9 @@ body {
   font-size: 18px;
   line-height: 1.7;
   position: relative; /* needed for top-right nav */
+  overflow-x: hidden;
 }
+
 
 
 main {
@@ -226,6 +228,7 @@ li {
   gap: 2rem;                   /* space between name and links */
   padding: 0 2rem;
   height: 64px;
+  width: 150%;
   background-color: var(--theme);
   color: var(--bg);
   font-family: 'Poppins', system-ui, sans-serif;

@@ -1,115 +1,76 @@
 ---
 const plotFiles = Object.keys(
   import.meta.glob('/public/pulje_plots/*.html', { eager: true })
-).map(path => {
-  const filename = path.split('/').pop().replace('.html', '');
-  const lower = filename.toLowerCase();
+);
 
-  let type = 'other';
-  if (lower.includes('_gengangere')) {
-    type = 'gengangere';
-  } else if (lower.includes('_lille_pulje')) {
-    type = 'small';
-  }
-
-  const label = filename
-    .replace(/_gengangere/i, '')
-    .replace(/_lille_pulje/i, '')
-    .replace(/_/g, ' ')
-    .trim();
-
-  return {
-    path: path.replace('/public', ''),
-    type,
-    name: filename,
-    label
-  };
+// Lav pæne labels + URLs
+const plots = plotFiles.map(path => {
+  const file = path.replace('/public', '');
+  const name = file
+    .split('/')
+    .pop()
+    .replace('.html', '')
+    .replace('_gengangere', '')
+    .replace('_lille_pulje', '')
+    .replace(/[_-]/g, ' ');
+  return { file, name };
 });
 ---
-<section class="plotly-section">
-
-  <div class="plot-controls">
-    <div>
-      <label for="plotFilter">Filter:</label>
-      <select id="plotFilter">
-        <option value="all">Intet filter</option>
-        <option value="gengangere">Rækker med gengangere</option>
-        <option value="small">Rækker med små puljer</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="plotSelect">Vælg række:</label>
-      <select id="plotSelect"></select>
-    </div>
-  </div>
-
-  <div class="plot-area">
-    {plotFiles.map(plot => (
-      <div
-        class="plot-container"
-        data-type={plot.type}
-        data-name={plot.name}
-        data-label={plot.label}
-        style="display:none"
-      >
-        <iframe src={plot.path} title={plot.label}></iframe>
-      </div>
+<section class="plotly-wrapper">
+  <label for="plot-select">Vælg række</label>
+  <select id="plot-select">
+    {plots.map((plot, i) => (
+      <option value={plot.file} selected={i === 0}>
+        {plot.name}
+      </option>
     ))}
+  </select>
+
+  <div class="plot-frame">
+    <iframe
+      id="plot-iframe"
+      src={plots[0]?.file}
+      title="Plotly plot"
+      loading="lazy"
+    ></iframe>
   </div>
 </section>
 
 <script>
-  const filter = document.getElementById('plotFilter');
-  const select = document.getElementById('plotSelect');
-  const plots = [...document.querySelectorAll('.plot-container')];
+  const select = document.getElementById('plot-select');
+  const iframe = document.getElementById('plot-iframe');
 
-  function updateDropdown() {
-    const value = filter.value;
-    select.innerHTML = '';
-
-    const visible = plots.filter(plot =>
-      value === 'all' || plot.dataset.type === value
-    );
-
-    visible.forEach(plot => {
-      const option = document.createElement('option');
-      option.value = plot.dataset.name;
-      option.textContent = plot.dataset.label;
-      select.appendChild(option);
-    });
-
-    if (visible.length) {
-      showPlot(visible[0].dataset.name);
-    }
-  }
-
-  function showPlot(name) {
-    plots.forEach(plot => {
-      plot.style.display =
-        plot.dataset.name === name ? '' : 'none';
-    });
-  }
-
-  filter.addEventListener('change', updateDropdown);
-  select.addEventListener('change', () => showPlot(select.value));
-
-  updateDropdown();
+  select.addEventListener('change', () => {
+    iframe.src = select.value;
+  });
 </script>
 
 <style>
-.plot-controls {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
+.plotly-wrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
 }
 
-.plot-container iframe {
-  width: 900px;
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+select {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.plot-frame {
+  width: 100%;
   height: 750px;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
   border: none;
-  padding-right: 0rem;
-  box-sizing: border-box;
-  
 }
 </style>
