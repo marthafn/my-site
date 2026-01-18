@@ -41,3 +41,5 @@ Swap accepteres kun hvis følgende tre betingelser er opfyldt:
 $$
 \Phi(\{P_1',\dots,P_a',\dots, P_b',\dots,P_K'\}) < \Phi(\{P_1',\dots,P_a',\dots, P_b',\dots,P_K'\})
 $$
+
+Algoritmen fortsætter indtil ingen forbedringer er mulige.
