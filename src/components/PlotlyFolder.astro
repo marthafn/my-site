@@ -1,76 +1,150 @@
 ---
-const plotFiles = Object.keys(
-  import.meta.glob('/public/pulje_plots/*.html', { eager: true })
-);
+// 1. Grab file paths (without eager: true to save memory)
+const allFiles = import.meta.glob('/public/pulje_plots/*/*.html');
 
-// Lav pæne labels + URLs
-const plots = plotFiles.map(path => {
-  const file = path.replace('/public', '');
-  const name = file
-    .split('/')
-    .pop()
+const folders = {};
+
+Object.keys(allFiles).forEach((path) => {
+  const parts = path.split('/');
+  const folderKey = parts[parts.length - 2]; 
+  const fileName = parts.pop();
+  
+  const name = fileName
     .replace('.html', '')
     .replace('_gengangere', '')
     .replace('_lille_pulje', '')
     .replace(/[_-]/g, ' ');
-  return { file, name };
+
+  const file = path.replace('/public', '');
+
+  if (!folders[folderKey]) {
+    folders[folderKey] = [];
+  }
+  folders[folderKey].push({ name, file });
 });
+
+const formatFolderName = (str) => {
+  return str.replace(/[_-]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+};
+
+const folderKeys = Object.keys(folders).sort();
+const initialFolder = folderKeys[0];
 ---
+
 <section class="plotly-wrapper">
-  <label for="plot-select">Vælg række</label>
-  <select id="plot-select">
-    {plots.map((plot, i) => (
-      <option value={plot.file} selected={i === 0}>
-        {plot.name}
-      </option>
-    ))}
-  </select>
+  
+  <div class="controls-container">
+    
+    <div class="control-group">
+      <label for="folder-select">Vælg klubbegrænsning</label>
+      <select id="folder-select">
+        {folderKeys.map((folder, i) => (
+          <option value={folder} selected={i === 0}>
+            {formatFolderName(folder)}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label for="plot-select">Vælg række</label>
+      <select id="plot-select">
+        {folders[initialFolder].map((plot, i) => (
+          <option value={plot.file} selected={i === 0}>
+            {plot.name}
+          </option>
+        ))}
+      </select>
+    </div>
+
+  </div>
 
   <div class="plot-frame">
     <iframe
       id="plot-iframe"
-      src={plots[0]?.file}
+      src={folders[initialFolder][0]?.file}
       title="Plotly plot"
       loading="lazy"
     ></iframe>
   </div>
 </section>
 
-<script>
-  const select = document.getElementById('plot-select');
+<script define:vars={{ folders }}>
+  const folderSelect = document.getElementById('folder-select');
+  const plotSelect = document.getElementById('plot-select');
   const iframe = document.getElementById('plot-iframe');
 
-  select.addEventListener('change', () => {
-    iframe.src = select.value;
+  function updatePlotOptions(folderName) {
+    const plots = folders[folderName] || [];
+    
+    // Clear and rebuild options
+    plotSelect.innerHTML = '';
+    plots.forEach((plot, index) => {
+      const option = document.createElement('option');
+      option.value = plot.file;
+      option.textContent = plot.name;
+      if (index === 0) option.selected = true;
+      plotSelect.appendChild(option);
+    });
+
+    // Update iframe
+    if (plots.length > 0) {
+      iframe.src = plots[0].file;
+    }
+  }
+
+  folderSelect.addEventListener('change', (e) => {
+    updatePlotOptions(e.target.value);
+  });
+
+  plotSelect.addEventListener('change', (e) => {
+    iframe.src = e.target.value;
   });
 </script>
 
 <style>
-.plotly-wrapper {
-  max-width: 1200px;
-  margin: 2rem auto;
-}
+  .plotly-wrapper {
+    max-width: 1200px;
+    margin: 2rem auto;
+  }
 
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
+  /* Flex container for side-by-side layout */
+  .controls-container {
+    display: flex;
+    gap: 2rem; /* Space between the dropdowns */
+    align-items: flex-end; /* Aligns bottom so inputs line up even if labels vary */
+    flex-wrap: wrap; /* Allows stacking on very small mobile screens */
+    margin-bottom: 1rem;
+  }
 
-select {
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
+  .control-group {
+    display: flex;
+    flex-direction: column;
+  }
 
-.plot-frame {
-  width: 100%;
-  height: 750px;
-}
+  label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
 
-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
+  select {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    min-width: 200px;
+    cursor: pointer;
+  }
+
+  .plot-frame {
+    width: 100%;
+    height: 750px;
+    background: linen;
+    border-radius: 4px;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
 </style>
